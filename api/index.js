@@ -80,5 +80,10 @@ app.get('/profile', (req,res) => {
     }
 })
 
+// LOGOUT ENDPOINT
+app.post('/logout', (req,res) => {
+    res.cookie('token', '').json(true);
+})
+
 // APP PORT
 app.listen(4000);
