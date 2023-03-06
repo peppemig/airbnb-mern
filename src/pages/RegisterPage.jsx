@@ -27,7 +27,7 @@ export default function RegisterPage() {
         <div className="mt-40 grow flex items-center justify-around">
             <div className="mb-64">
                 <h1 className="text-4xl text-center mb-4 font-bold">Register</h1>
-                <form className="max-w-md mx-auto" onSubmit={registerUser}>
+                <form className="max-w-md mx-auto text-center" onSubmit={registerUser}>
                     <input type="text" 
                         placeholder='John Doe' 
                         value={name} 
@@ -40,7 +40,7 @@ export default function RegisterPage() {
                         placeholder="password" 
                         value={password}
                         onChange={ev => setPassword(ev.target.value)}/>
-                    <button class="primary">Register</button>
+                    <button class="primary w-24 mt-2">Register</button>
                     <div className='text-center py-2 text-gray-500'>
                         Already have an account? <Link className="text-black font-bold" to={"/login"}>Sign in</Link>
                     </div>

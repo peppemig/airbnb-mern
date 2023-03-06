@@ -29,7 +29,7 @@ export default function LoginPage() {
         <div className="mt-40 grow flex items-center justify-around">
             <div className="mb-64">
                 <h1 className="text-4xl text-center mb-4 font-bold">Login</h1>
-                <form className="max-w-md mx-auto" onSubmit={handleLoginSubmit}>
+                <form className="max-w-md mx-auto text-center" onSubmit={handleLoginSubmit}>
                     <input type="email" 
                         placeholder="your@email.com" 
                         value={email}
@@ -38,7 +38,7 @@ export default function LoginPage() {
                         placeholder="password" 
                         value={password}
                         onChange={ev => setPassword(ev.target.value)}/>
-                    <button class="primary">Login</button>
+                    <button class="primary w-24 mt-2">Login</button>
                     <div className='text-center py-2 text-gray-500'>
                         Don't have an account yet? <Link className="text-black font-bold" to={"/register"}>Register now</Link>
                     </div>
