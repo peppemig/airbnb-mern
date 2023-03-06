@@ -11,3 +11,4 @@ CURRENT EXPRESS ENDPOINTS:
 - /register  ->  REGISTER USER (password encrypted with bcryptjs)
 - /profile  ->  CHECK FOR USER IN COOKIES
 - /logout  ->  CLEAR TOKEN COOKIE TO LOGOUT USER
+- /upload-by-link  ->  DOWNLOAD IMAGE FROM LINK ON SERVER
