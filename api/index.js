@@ -6,8 +6,10 @@ const jwt = require('jsonwebtoken')
 const imageDownloader = require('image-downloader');
 const { default: mongoose } = require('mongoose');
 const User = require('./models/User');
-const CookieParser = require('cookie-parser');
+const Place = require('./models/Place')
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
+const fs = require('fs')
 require('dotenv').config()
 
 const app = express()
@@ -98,6 +100,38 @@ app.post('/upload-by-link', async (req,res) => {
         dest: __dirname + '/uploads/' + newName
     });
     res.json({filename: newName})
+})
+
+// UPLOAD BY FILE
+const photosMiddleware = multer({dest:'uploads/'})
+app.post('/upload', photosMiddleware.array('photos', 100), (req,res) => {
+    const uploadedFiles = []
+    //console.log(req.files)
+    for (let i=0; i<req.files.length; i++) {
+        //console.log(files)
+        const {path,originalname} = req.files[i];
+        console.log(originalname)
+        const parts = originalname.split('.')
+        const ext = parts[parts.length - 1]
+        const newPath = path + '.' + ext;
+        fs.renameSync(path, newPath)
+        uploadedFiles.push(newPath.replace("uploads",'').replace('\\',''))
+    }
+    res.json(uploadedFiles); 
+})
+
+// POST REQUEST TO /PLACES TO ADD A PLACE
+app.post('/places', (req,res) => {
+    const {token} = req.cookies;
+    const {title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests} = req.body;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        if (err) throw err;
+        const placeDoc = await Place.create({
+            owner: userData.id,
+            title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests
+        });
+        res.json(placeDoc)
+    })
 })
 
 // APP PORT
