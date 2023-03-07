@@ -17,6 +17,7 @@ export default function PlacesFormPage(){
     const [maxGuests,setMaxGuests] = useState(1);
     const [addedPhotos,setAddedPhotos] = useState([]);
     const [redirect,setRedirect] = useState(false)
+    const [price,setPrice] = useState(100)
 
     function inputHeader(text) {
         return (
@@ -41,7 +42,7 @@ export default function PlacesFormPage(){
 
     async function savePlace(ev) {
         ev.preventDefault();
-        const placeData = {title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests}
+        const placeData = {title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests, price}
         // IF WE HAVE ID IN LINK THEN WE ARE UPDATING
         if(id){
             await axios.put('/places', {id,...placeData})
@@ -66,6 +67,7 @@ export default function PlacesFormPage(){
             setCheckIn(data.checkIn)
             setCheckOut(data.checkOut)
             setMaxGuests(data.maxGuests)
+            setPrice(data.price)
         })
     }, [id])
 
@@ -110,7 +112,7 @@ export default function PlacesFormPage(){
 
                         <div>
                         {preInput('Check-in & Check-out','Add check-in and check-out times')}
-                        <div className="grid sm:grid-cols-3 gap-2">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                             <div>
                                 <h3 className="mt-3 -mb-1">Check-in time</h3>
                                 <input value={checkIn} onChange={ev => setCheckIn(ev.target.value)} type="text" placeholder="for example: 14:00"/>
@@ -120,8 +122,12 @@ export default function PlacesFormPage(){
                                 <input value={checkOut} onChange={ev => setCheckOut(ev.target.value)} type="text" placeholder="for example: 10:00"/>
                             </div>
                             <div>
-                                <h3 className="mt-3 -mb-1">Max number of guests</h3>
+                                <h3 className="mt-3 -mb-1">Max n. of guests</h3>
                                 <input value={maxGuests} onChange={ev => setMaxGuests(ev.target.value)} type="number" placeholder="for example: 2"/>
+                            </div>
+                            <div>
+                                <h3 className="mt-3 -mb-1">Price per night</h3>
+                                <input value={price} onChange={ev => setPrice(ev.target.value)} type="number" placeholder="for example: 100"/>
                             </div>
                         </div>
                         </div>
