@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, useParams } from "react-router-dom";
 import AccountNav from "../components/AccountNav";
 import Perks from "../components/Perks";
 import PhotosUploader from "../components/PhotosUploader";
 import axios from "axios";
 
 export default function PlacesFormPage(){
+    const {id} = useParams()
     const [title,setTitle] = useState('');
     const [address,setAddress] = useState('');
     const [description,setDescription] = useState('');
@@ -38,12 +39,35 @@ export default function PlacesFormPage(){
         )
     }
 
-    async function addNewPlace(ev) {
+    async function savePlace(ev) {
         ev.preventDefault();
         const placeData = {title, address, addedPhotos, description, perks, extraInfo, checkIn, checkOut, maxGuests}
-        await axios.post('/places', placeData)
-        setRedirect(true)
+        // IF WE HAVE ID IN LINK THEN WE ARE UPDATING
+        if(id){
+            await axios.put('/places', {id,...placeData})
+            setRedirect(true)
+        }else{
+        // IF WE DONT HAVE ID IN LINK WE HAVE NEW PLACE
+            await axios.post('/places', placeData)
+            setRedirect(true)
+        }
     }
+
+    useEffect(() => {
+        if(!id) {return}
+        axios.get('/places/'+id).then(response => {
+            const {data} = response;
+            setTitle(data.title)
+            setAddress(data.address)
+            setAddedPhotos(data.photos)
+            setDescription(data.description)
+            setPerks(data.perks)
+            setExtraInfo(data.extraInfo)
+            setCheckIn(data.checkIn)
+            setCheckOut(data.checkOut)
+            setMaxGuests(data.maxGuests)
+        })
+    }, [id])
 
     if (redirect) {
         return <Navigate to={'/account/places'} />
@@ -58,7 +82,7 @@ export default function PlacesFormPage(){
         <div className="sm:w-full md:w-2/3 lg:w-1/2">
 
 
-                    <form className="space-y-10" onSubmit={addNewPlace}>
+                    <form className="space-y-10" onSubmit={savePlace}>
 
                         <div>
                         {preInput('Title','Title for your place, should be short and catchy')}
