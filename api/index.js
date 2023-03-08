@@ -174,14 +174,29 @@ app.get('/places', async (req,res) => {
 })
 
 
+// BOOK PLACE
 app.post('/bookings', (req,res) => {
-    const {place,checkIn,checkOut,numberOfGuests,name,phone,email,price} = req.body
-    Booking.create({
-        place,checkIn,checkOut,numberOfGuests,name,phone,email,price
-    }).then((doc) => {
-        res.json(doc)
-    }).catch((err) => {
-        throw err;
+    const {token} = req.cookies;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        const {id} = userData
+        const {place,checkIn,checkOut,numberOfGuests,name,phone,email,price} = req.body
+        Booking.create({
+            user:id,place,checkIn,checkOut,numberOfGuests,name,phone,email,price
+        }).then((doc) => {
+            res.json(doc)
+        }).catch((err) => {
+            throw err;
+        })
+    })
+})
+
+// GET ALL BOOKINGS (FOR SPECIFIC ID)
+app.get('/bookings', (req,res) => {
+    const {token} = req.cookies;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        if (err) return 'not logged in'
+        const {id} = userData
+        res.json(await Booking.find({user:id}).populate('place'))
     })
 })
 

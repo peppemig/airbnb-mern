@@ -27,7 +27,6 @@ export default function PlacesPage() {
                 </div>
         </div>
         <div>
-            
             {places.length > 0 && places.map(place => (
                 <div className="mt-7 justify-center flex">
                 <Link to={'/account/places/'+place._id} className="flex gap-4 bg-gray-100 p-4 rounded-2xl cursor-pointer lg:w-2/3">
@@ -41,10 +40,6 @@ export default function PlacesPage() {
                     </div>
                 </Link>
                 </div>
-   
-
-
-
             ))}
         </div>
         </>
