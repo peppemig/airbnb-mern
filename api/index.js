@@ -7,6 +7,7 @@ const imageDownloader = require('image-downloader');
 const { default: mongoose } = require('mongoose');
 const User = require('./models/User');
 const Place = require('./models/Place')
+const Booking = require('./models/Booking')
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const fs = require('fs')
@@ -167,10 +168,21 @@ app.put('/places', async (req,res) => {
     })
 })
 
-
 // GET ALL PLACES
 app.get('/places', async (req,res) => {
     res.json( await Place.find())
+})
+
+
+app.post('/bookings', (req,res) => {
+    const {place,checkIn,checkOut,numberOfGuests,name,phone,email,price} = req.body
+    Booking.create({
+        place,checkIn,checkOut,numberOfGuests,name,phone,email,price
+    }).then((doc) => {
+        res.json(doc)
+    }).catch((err) => {
+        throw err;
+    })
 })
 
 // APP PORT
