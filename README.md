@@ -20,3 +20,9 @@ CURRENT EXPRESS ENDPOINTS:
 - GET /places  ->  GET ALL PLACES (TO DISPLAY IN INDEXPAGE)
 - POST /bookings  ->  BOOK A PLACE
 - GET /bookings  ->  GET BOOKINGS (FOR A SPECIFIC USER -> ID FROM TOKEN)
+
+![bnb1](https://user-images.githubusercontent.com/120139042/223871541-398fd2cf-2383-452b-8dcf-abb41bbb0205.png)
+
+![bnb2](https://user-images.githubusercontent.com/120139042/223871690-5b9eb42e-774a-4a20-ba65-7752279ec4c3.png)
+
+![bnb3](https://user-images.githubusercontent.com/120139042/223871767-b1cf415e-6a6a-46bf-baa3-0caa2f9c626b.png)
