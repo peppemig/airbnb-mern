@@ -21,7 +21,7 @@ export default function BookingsPage() {
         <div>
             {bookings.length > 0 && bookings.map(booking => (
                 <div className="mt-7 justify-center flex">
-                <Link  className="flex gap-4 bg-gray-100 p-4 rounded-2xl cursor-pointer lg:w-2/3">
+                <Link to={'/account/bookings/'+booking._id} className="flex gap-4 bg-gray-100 p-4 rounded-2xl cursor-pointer lg:w-2/3">
                     <div className="w-32 h-32 grow shrink-0">
                         <img className="w-32 h-32 rounded-2xl object-cover" src={`http://localhost:4000/uploads/${booking.place.photos[0]}`} />
                     </div>
